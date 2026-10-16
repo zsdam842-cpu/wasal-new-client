@@ -1,0 +1,207 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #101418;
+  color: #ffffff;
+}
+
+body {
+  min-height: 100vh;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+}
+
+.header p {
+  margin: 0;
+  color: #aeb7c2;
+}
+
+.card {
+  background: #1a2027;
+  border: 1px solid #2c343d;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 7px;
+  color: #cbd3dc;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #39434e;
+  background: #101418;
+  color: #ffffff;
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #6ea8fe;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 11px 16px;
+  border-radius: 10px;
+  background: #2e3843;
+  color: #ffffff;
+}
+
+.btn:hover {
+  filter: brightness(1.12);
+}
+
+.btn.primary {
+  background: #2563eb;
+}
+
+.btn.success {
+  background: #15803d;
+}
+
+.btn.danger {
+  background: #dc2626;
+}
+
+.btn.warning {
+  background: #b45309;
+}
+
+.status {
+  padding: 12px;
+  border-radius: 10px;
+  background: #101418;
+  color: #cbd3dc;
+  margin-bottom: 14px;
+  min-height: 44px;
+}
+
+.call-panel {
+  display: none;
+}
+
+.call-panel.active {
+  display: block;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.video-box {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000000;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.video-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-label {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: rgb(0 0 0 / 65%);
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-size: 12px;
+}
+
+.incoming {
+  display: none;
+  border: 1px solid #d97706;
+  background: #2a2114;
+}
+
+.incoming.active {
+  display: block;
+}
+
+.incoming h2 {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .app {
+    padding: 12px;
+  }
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

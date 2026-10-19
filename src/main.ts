@@ -1,6 +1,7 @@
 import "./style.css";
 
 import { CallSocket } from "./calls/call.socket";
+import { CORE_SERVER_URL, MEDIA_SERVER_URL } from "./config/servers";
 
 import {
   getSession,
@@ -10,10 +11,7 @@ import {
   startTokenRefreshTimer,
 } from "./auth/session";
 
-const SERVER_URL =
-  import.meta.env
-    .VITE_WASAL_SERVER_URL ??
-  "http://localhost:3000";
+const SERVER_URL = MEDIA_SERVER_URL;
 
 const app =
   document.querySelector<HTMLDivElement>(
@@ -206,16 +204,14 @@ function saveCurrentSession(): boolean {
   return true;
 }
 
-function startRefreshTimer(
-  serverUrl: string,
-): void {
+function startRefreshTimer(): void {
   if (stopRefreshTimer) {
     stopRefreshTimer();
   }
 
   stopRefreshTimer =
     startTokenRefreshTimer(
-      serverUrl,
+      CORE_SERVER_URL,
     );
 }
 
@@ -244,7 +240,7 @@ connectButton.addEventListener(
 
     const token =
       await getValidAccessToken(
-        serverUrl,
+        CORE_SERVER_URL,
       );
 
     if (!token) {
@@ -261,9 +257,7 @@ connectButton.addEventListener(
       token,
     );
 
-    startRefreshTimer(
-      serverUrl,
-    );
+    startRefreshTimer();
 
     statusElement.textContent =
       "جاري الاتصال بالسيرفر...";
@@ -313,7 +307,7 @@ uploadButton.addEventListener(
 
     const token =
       await getValidAccessToken(
-        serverUrl,
+        CORE_SERVER_URL,
       );
 
     if (!token) {
@@ -352,7 +346,7 @@ uploadButton.addEventListener(
       if (response.status === 401) {
         const newToken =
           await getValidAccessToken(
-            serverUrl,
+            CORE_SERVER_URL,
           );
 
         if (!newToken) {

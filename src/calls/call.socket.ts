@@ -1,4 +1,5 @@
 import { io, type Socket } from "socket.io-client";
+import { CORE_SERVER_URL } from "../config/servers";
 
 import {
   getSession,
@@ -234,7 +235,7 @@ export class CallSocket {
 
     const newToken =
       await refreshAccessToken(
-        this.serverUrl,
+        CORE_SERVER_URL,
       );
 
     if (!newToken) {

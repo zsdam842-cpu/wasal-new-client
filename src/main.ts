@@ -10,10 +10,15 @@ import {
   startTokenRefreshTimer,
 } from "./auth/session";
 
+// عنوان خادم الوسائط والمكالمات. القيمة الافتراضية هي الخدمة الحقيقية
+// على Railway؛ العنوان القديم (wasal-media-server-production) يعيد 404.
+const DEFAULT_SERVER_URL =
+  "https://az-wasal-media-server-production.up.railway.app";
+
 const SERVER_URL =
   import.meta.env
     .VITE_WASAL_SERVER_URL ??
-  "http://localhost:3000";
+  DEFAULT_SERVER_URL;
 
 const app =
   document.querySelector<HTMLDivElement>(
@@ -115,6 +120,12 @@ app.innerHTML = `
           id="uploadStatus"
           class="status"
         ></div>
+
+        <img
+          id="uploadedPreview"
+          alt="معاينة الصورة المرفوعة"
+          hidden
+        />
       </section>
     </div>
   </main>
@@ -385,10 +396,28 @@ uploadButton.addEventListener(
         await response.json();
 
       if (response.ok) {
-        uploadStatus.textContent =
-          "تم رفع الصورة بنجاح!";
+        const mediaUrl = String(
+          result.url ||
+            result.absoluteUrl ||
+            result.mediaUrl ||
+            "",
+        );
 
-        console.log(result);
+        uploadStatus.innerHTML =
+          mediaUrl
+            ? `تم رفع الصورة بنجاح! <a href="${mediaUrl}" target="_blank" rel="noopener noreferrer">فتح الرابط</a>`
+            : "تم رفع الصورة بنجاح!";
+
+        const preview =
+          document.querySelector<HTMLImageElement>(
+            "#uploadedPreview",
+          );
+
+        if (preview && mediaUrl) {
+          preview.src = mediaUrl;
+          preview.hidden = false;
+        }
+
         return;
       }
 

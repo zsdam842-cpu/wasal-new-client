@@ -1,14 +1,6 @@
 import type { CallType } from "./call.types";
 import { CallSocket } from "./call.socket";
-
-const ICE_SERVERS: RTCIceServer[] = [
-  {
-    urls: [
-      "stun:stun.l.google.com:19302",
-      "stun:stun1.l.google.com:19302",
-    ],
-  },
-];
+import { FALLBACK_ICE_SERVERS } from "./ice.config";
 
 export class CallWebRTC {
   private peerConnection: RTCPeerConnection | null = null;
@@ -24,6 +16,8 @@ export class CallWebRTC {
   private currentCallerId: string | null = null;
 
   private currentReceiverId: string | null = null;
+
+  private iceServers: RTCIceServer[] = FALLBACK_ICE_SERVERS;
 
   private readonly socket: CallSocket;
 
@@ -167,6 +161,14 @@ export class CallWebRTC {
     return track.enabled;
   }
 
+  /** قائمة STUN/TURN التي يجلبها العميل من الخادم قبل كل مكالمة. */
+  setIceServers(servers: RTCIceServer[]): void {
+    this.iceServers =
+      servers && servers.length > 0
+        ? servers
+        : FALLBACK_ICE_SERVERS;
+  }
+
   getLocalStream(): MediaStream | null {
     return this.localStream;
   }
@@ -249,7 +251,7 @@ export class CallWebRTC {
 
     this.peerConnection =
       new RTCPeerConnection({
-        iceServers: ICE_SERVERS,
+        iceServers: this.iceServers,
       });
 
     for (const track of this.localStream.getTracks()) {
